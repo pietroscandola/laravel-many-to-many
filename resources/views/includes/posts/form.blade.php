@@ -64,9 +64,10 @@
         </div>
     </div>
     <div class="col-2">
-        <img src="{{ old('image', $post->image) }} ?? https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640"
+        <img src="{{ old('image',$post->image ?? 'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640') }} "
             class="img-fluid" id="preview">
     </div>
+
     <div class="col-12 d-flex my-2">
         <div class="form-check">
             <input type="checkbox" class="form-check-input" id="is_published" name="is_published"
@@ -74,6 +75,8 @@
             <label class="form-check-label" for="is_published">Pubblicato</label>
         </div>
     </div>
+
+
 </div>
 <button type="submit" class="btn btn-success">
     <i class="fa-solid fa-floppy-disk mr-2"></i>
