@@ -22,7 +22,8 @@
                 <th scope="col">#</th>
                 <th scope="col">Title</th>
                 <th scope="col">Category</th>
-                <th scope="col">Pubblicato il</th>
+                <th scope="col">Tags</th>
+                <th scope="col">Pubblicato</th>
                 <th scope="col">Created at</th>
                 <th scope="col">Actions</th>
             </tr>
@@ -42,6 +43,16 @@
                         @else
                             -
                         @endif
+                    </td>
+
+                    <td>
+                        @forelse($post->tags as $tag)
+                            <span class="badge badge-pill badge-{{ $tag->color }}">
+                                {{ $tag->label }}
+                            </span>
+                        @empty
+                            -
+                        @endforelse
                     </td>
 
                     <td class="d-flex align-items-center justify-content-between">

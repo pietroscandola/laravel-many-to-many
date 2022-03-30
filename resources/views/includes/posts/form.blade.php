@@ -69,7 +69,7 @@
     </div>
 
     <hr>
-    <div class="col-12">
+    <div class="col-12" @error('tags') is_invalid @enderror>
         @foreach ($tags as $tag)
             <div class="form-check form-check-inline">
                 <input class="form-check-input" type="checkbox" id="tag-{{ $tag->id }}"
@@ -77,6 +77,11 @@
                 <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->label }}</label>
             </div>
         @endforeach
+        @error('tags')
+            <div class="invalid-feedback">
+                {{ $message }}
+            </div>
+        @enderror
     </div>
     <hr>
 
