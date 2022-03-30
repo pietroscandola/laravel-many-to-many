@@ -7,6 +7,15 @@
     <div>
         <time>Creato il: {{ $post->created_at }}</time>
     </div>
+    @if ($post->tags)
+        <div>
+            <span>Tags: </span>
+            @foreach ($post->tags as $tag)
+                <span>{{ $tag->label }}, </span>
+            @endforeach
+
+        </div>
+    @endif
     @if ($post->image)
         <img src="{{ $post->image }}" alt="{{ $post->slug }}" class="img-fluid" width="250">
     @endif
