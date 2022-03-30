@@ -63,7 +63,8 @@ class PostController extends Controller
         }
         $post->save();
 
-        $post->tags()->attach($data['tags']);
+        if (array_key_exists('tags', $data)) $post->tags()->attach($data['tags']);
+
 
         return redirect()->route('admin.posts.index')->with('message', 'Post creato con successo!!')->with('type', 'success');
     }
@@ -87,9 +88,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        // sono gli id dei tags selezionati in uno specifico post
+        $posts_tags_id = $post->tags->pluck('id')->toArray();
         $tags = Tag::all();
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
+        return view('admin.posts.edit', compact('post', 'categories', 'tags', 'posts_tags_id'));
     }
 
     /**
@@ -118,6 +121,12 @@ class PostController extends Controller
 
         $data['slug'] = Str::slug($request->title, '-');
         $post->update($data);
+
+        if (!array_key_exists('tags', $data)) {
+            $post->tags()->detach();
+        } else {
+            $post->tags()->sync($data['tags']);
+        }
 
         return redirect()->route('admin.posts.show', $post)->with('message', 'Post creato con successo!!')->with('type', 'success');
     }
