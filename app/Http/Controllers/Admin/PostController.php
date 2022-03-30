@@ -49,7 +49,8 @@ class PostController extends Controller
             'title' => ['required', 'string', Rule::unique('posts')->ignore($post->id), 'min:5'],
             'content' => 'string',
             'image' => 'nullable|url',
-            'category_id' => 'nullable| exists:categories,id'
+            'category_id' => 'nullable| exists:categories,id',
+            'tags' => 'nullable | exists:tags,id'
         ]);
         $data = $request->all();
         $data['slug'] = Str::slug($request->title, '-');
@@ -100,7 +101,8 @@ class PostController extends Controller
             'title' => ['required', 'string', Rule::unique('posts')->ignore($post->id), 'min:5'],
             'content' => 'string',
             'image' => 'nullable|url',
-            'category_id' => 'nullable| exists:categories,id'
+            'category_id' => 'nullable| exists:categories,id',
+            'tags' => 'nullable | exists:tags,id'
         ]);
         $data = $request->all();
 
