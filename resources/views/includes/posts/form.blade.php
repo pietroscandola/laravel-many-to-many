@@ -70,10 +70,13 @@
 
     <hr>
     <div class="col-12">
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-            <label class="form-check-label" for="inlineCheckbox1">1</label>
-        </div>
+        @foreach ($tags as $tag)
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="tag-{{ $tag->id }}"
+                    value="{{ $tag->id }}" name="tags[]">
+                <label class="form-check-label" for="tag-{{ $tag->id }}">{{ $tag->label }}</label>
+            </div>
+        @endforeach
     </div>
     <hr>
 
