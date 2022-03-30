@@ -51,6 +51,8 @@ class PostController extends Controller
             'image' => 'nullable|url',
             'category_id' => 'nullable| exists:categories,id',
             'tags' => 'nullable | exists:tags,id'
+        ], [
+            'tags.exist' => 'Uno dei tag selezionati non è valido'
         ]);
         $data = $request->all();
         $data['slug'] = Str::slug($request->title, '-');
@@ -60,6 +62,8 @@ class PostController extends Controller
             $post->is_published = 1;
         }
         $post->save();
+
+        $post->tags()->attach($data['tags']);
 
         return redirect()->route('admin.posts.index')->with('message', 'Post creato con successo!!')->with('type', 'success');
     }
