@@ -24,7 +24,7 @@
                 <th scope="col">Category</th>
                 <th scope="col">Tags</th>
                 <th scope="col">Pubblicato</th>
-                <th scope="col">Created at</th>
+                <th scope="col">Modificato il</th>
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -67,7 +67,7 @@
                         </form>
                     </td>
 
-                    <td>{{ $post->created_at }}</td>
+                    <td>{{ $post->updated_at }}</td>
 
                     <td class="d-flex justify-content-center align-items-center">
                         <a href="{{ route('admin.posts.show', $post->id) }}" class="btn btn-sm btn-primary mr-3">
