@@ -16,6 +16,7 @@
 
         </div>
     @endif
+    <br>
     @if ($post->image)
         <img src="{{ $post->image }}" alt="{{ $post->slug }}" class="img-fluid" width="250">
     @endif
