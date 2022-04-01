@@ -1,12 +1,16 @@
 @component('mail::message')
-# Introduction
+    <h1>Titolo del Post: {{ $post->title }}</h1>
+    <p>Contenuto del Post: {{ $post->content }}</p>
+    @if ($post->image)
+        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
+    @endif
 
-The body of your message.
 
-@component('mail::button', ['url' => ''])
-Button Text
-@endcomponent
 
-Thanks,<br>
-{{ config('app.name') }}
+    @component('mail::button', ['url' => ''])
+        Vedi
+    @endcomponent
+
+    Thanks,<br>
+    {{ config('app.name') }}
 @endcomponent

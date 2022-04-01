@@ -74,7 +74,7 @@ class PostController extends Controller
 
         if (array_key_exists('tags', $data)) $post->tags()->attach($data['tags']);
 
-        $mail = new SendMail();
+        $mail = new SendMail($post);
         $receiver = Auth::user()->email;
         Mail::to($receiver)->send($mail);
 

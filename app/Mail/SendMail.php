@@ -18,9 +18,9 @@ class SendMail extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($post)
     {
-        //
+        $this->post = $post;
     }
 
     /**
@@ -30,6 +30,6 @@ class SendMail extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.posts.published');
+        return $this->markdown('emails.posts.published', ['post' => $this->post]);
     }
 }
