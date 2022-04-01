@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\SendMail;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+
 
 class PostController extends Controller
 {
@@ -69,6 +73,10 @@ class PostController extends Controller
         $post->save();
 
         if (array_key_exists('tags', $data)) $post->tags()->attach($data['tags']);
+
+        $mail = new SendMail();
+        $receiver = Auth::user()->email;
+        Mail::to($receiver)->send($mail);
 
 
         return redirect()->route('admin.posts.index')->with('message', 'Post creato con successo!!')->with('type', 'success');
