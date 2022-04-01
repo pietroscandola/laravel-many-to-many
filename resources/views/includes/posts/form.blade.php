@@ -56,8 +56,7 @@
     <div class="col-10">
         <div class="form-group">
             <label for="image">Immagine</label>
-            <input type="url" class="form-control @error('image') is-invalid @enderror" id="image" name="image"
-                value="{{ old('image', $post->image) }}" placeholder="url immagine">
+            <input type="file" class="form-control-file @error('image') is-invalid @enderror" id="image" name="image">
             @error('image')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
