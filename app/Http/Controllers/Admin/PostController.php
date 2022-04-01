@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -48,7 +49,7 @@ class PostController extends Controller
         $request->validate([
             'title' => ['required', 'string', Rule::unique('posts')->ignore($post->id), 'min:5'],
             'content' => 'string',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image',
             'category_id' => 'nullable| exists:categories,id',
             'tags' => 'nullable | exists:tags,id'
         ], [
@@ -57,6 +58,10 @@ class PostController extends Controller
         $data = $request->all();
         $data['slug'] = Str::slug($request->title, '-');
         $post = new Post();
+        if (array_key_exists('image', $data)) {
+            $img_path = Storage::put('uploads', $data['image']);
+            $data['image'] = $img_path;
+        }
         $post->fill($data);
         if (array_key_exists('is_published', $data)) {
             $post->is_published = 1;
@@ -107,7 +112,7 @@ class PostController extends Controller
         $request->validate([
             'title' => ['required', 'string', Rule::unique('posts')->ignore($post->id), 'min:5'],
             'content' => 'string',
-            'image' => 'nullable|url',
+            'image' => 'nullable|image',
             'category_id' => 'nullable| exists:categories,id',
             'tags' => 'nullable | exists:tags,id'
         ]);
@@ -117,6 +122,14 @@ class PostController extends Controller
             $data['is_published'] = 1;
         } else {
             $data['is_published'] = 0;
+        }
+
+        if (array_key_exists('image', $data)) {
+            if ($post->image) {
+                Storage::delete($post->image);
+            }
+            $img_path = Storage::put('uploads', $data['image']);
+            $data['image'] = $img_path;
         }
 
         $data['slug'] = Str::slug($request->title, '-');

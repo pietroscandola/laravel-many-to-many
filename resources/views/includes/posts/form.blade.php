@@ -9,10 +9,10 @@
 @endif
 
 @if ($post->exists)
-    <form action="{{ route('admin.posts.update', $post->id) }}" method="POST">
+    <form action="{{ route('admin.posts.update', $post->id) }}" enctype="multipart/form-data" method="POST">
         @method('PUT')
     @else
-        <form action="{{ route('admin.posts.store') }}" method="POST">
+        <form action="{{ route('admin.posts.store') }}" enctype="multipart/form-data" method="POST">
 @endif
 
 @csrf
@@ -64,8 +64,12 @@
         </div>
     </div>
     <div class="col-2">
-        <img src="{{ old('image',$post->image ?? 'https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640') }} "
-            class="img-fluid" id="preview">
+        @if ($post->image)
+            <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
+        @else
+            <img src="https://socialistmodernism.com/wp-content/uploads/2017/07/placeholder-image.png?w=640"
+                class="img-fluid" id="preview">
+        @endif
     </div>
 
     <hr>
